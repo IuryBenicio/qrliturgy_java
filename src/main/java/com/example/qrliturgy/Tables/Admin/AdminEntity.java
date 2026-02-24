@@ -14,8 +14,8 @@ import org.hibernate.validator.constraints.UUID;
 @AllArgsConstructor
 public class AdminEntity {
 
-    @UUID
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "nome")

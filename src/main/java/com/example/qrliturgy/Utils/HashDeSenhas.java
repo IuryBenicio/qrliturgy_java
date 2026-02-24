@@ -2,7 +2,9 @@ package com.example.qrliturgy.Utils;
 
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HashDeSenhas {
 
     public String codificarSenha(String senha){
