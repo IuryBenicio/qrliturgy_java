@@ -1,15 +1,21 @@
-# 1. Imagem base com JDK 17 (leve/slim)
-FROM amazoncorretto:17-alpine
-
-# 2. Define o diretório de trabalho dentro do container
+# ESTÁGIO 1: Compilação (Build)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 3. Copia o arquivo .jar gerado pelo Maven/Gradle para dentro do container
-# O caminho 'target/*.jar' é o padrão do Maven
-COPY target/qrliturgy-0.0.1-SNAPSHOT.jar app.jar
+# Copia apenas o pom.xml e as dependências primeiro (otimiza o cache do Docker)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# 4. Expõe a porta que o Spring Boot usa (geralmente 8080)
-EXPOSE 8081
+# Copia o código fonte e gera o JAR
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# 5. Comando para iniciar a aplicação
+# ESTÁGIO 2: Execução (Runtime)
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+
+# Pega o JAR que foi gerado no estágio anterior ("build")
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
