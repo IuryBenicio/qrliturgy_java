@@ -1,13 +1,13 @@
 package com.example.qrliturgy.Tables.Admin;
 
-import com.example.qrliturgy.Tables.Admin.DTOS.AdminDTOResponse;
+import com.example.qrliturgy.Tables.Admin.DTOS.AdminDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "Spring")
 public interface AdminMapper {
 
-    AdminEntity toEntity(AdminDTOResponse dto);
+    AdminEntity toEntity(AdminDTO dto);
 
-    AdminDTOResponse toDTO(AdminEntity entity);
+    AdminDTO toDTO(AdminEntity entity);
 
 }

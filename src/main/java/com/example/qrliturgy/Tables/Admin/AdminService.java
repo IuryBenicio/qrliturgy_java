@@ -1,15 +1,12 @@
 package com.example.qrliturgy.Tables.Admin;
 
 import com.example.qrliturgy.Tables.Admin.DTOS.AdminDTORequest;
-import com.example.qrliturgy.Tables.Admin.DTOS.AdminDTOResponse;
+import com.example.qrliturgy.Tables.Admin.DTOS.AdminDTO;
 import com.example.qrliturgy.Tables.Admin.exceptions.AdminExists;
 import com.example.qrliturgy.Tables.Admin.exceptions.AdminNotFounded;
 import com.example.qrliturgy.Tables.Admin.exceptions.SenhaIncorreta;
 import com.example.qrliturgy.Utils.HashDeSenhas;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -24,7 +21,7 @@ public class AdminService {
         this.hashDeSenhas = hashDeSenhas;
     }
 
-    public AdminDTOResponse login(AdminDTORequest loginDTO){
+    public AdminDTO login(AdminDTORequest loginDTO){
         AdminEntity admin = adminRepository.findByEmail(loginDTO.email()).orElseThrow(()-> new AdminNotFounded("Administrador não encontrado"));
 
         if (!hashDeSenhas.verificaSenha(loginDTO.password(), admin.getPassword())){
@@ -66,7 +63,7 @@ public class AdminService {
         }
     }
 
-    public AdminDTOResponse register(AdminDTORequest adminDTORequest){
+    public AdminDTO register(AdminDTORequest adminDTORequest){
         if ( adminRepository.findByEmail(adminDTORequest.email()).isPresent() || adminRepository.findByNome(adminDTORequest.nome()).isPresent()){
             throw new AdminExists("Administrador já cadastrado");
         }
@@ -79,7 +76,7 @@ public class AdminService {
             throw new SenhaIncorreta("Senha precisa conter pelo menos 1 número");
         }
 
-        if (!adminDTORequest.password().matches(".*[a-zA-Z].")){
+        if (!adminDTORequest.password().matches(".*[a-zA-Z].*")){
             throw new SenhaIncorreta("Senha precisa conter pelo menos 1 letra");
         }
 

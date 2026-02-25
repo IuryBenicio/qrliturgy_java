@@ -2,7 +2,7 @@ package com.example.qrliturgy.Tables.Admin.DTOS;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record AdminDTOResponse(
+public record AdminDTO(
         @NotBlank String nome,
         @NotBlank String email
 ) {
