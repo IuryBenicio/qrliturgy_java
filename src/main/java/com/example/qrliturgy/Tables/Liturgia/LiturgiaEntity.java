@@ -59,7 +59,7 @@ public class LiturgiaEntity {
     @OrderColumn(name = "posicao_musica")
     private List<LouvorEntity> louvores;
 
-    @OneToMany(mappedBy = "liturgia")
+    @OneToMany(mappedBy = "liturgia", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AvisoEntity> avisos;
 
     @CreationTimestamp
