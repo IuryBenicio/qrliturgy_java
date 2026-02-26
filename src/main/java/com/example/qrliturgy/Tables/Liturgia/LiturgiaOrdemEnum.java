@@ -8,6 +8,7 @@ public enum LiturgiaOrdemEnum {
     AVISOS("Avisos"),
     ORACAO_FINAL("Oração Final");
 
+    //apenas descreve o momento do culto para melhor compreensão do código
     private final String descricao;
 
     LiturgiaOrdemEnum(String descricao) {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("liturgia")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LiturgiaController {
 
     private final LiturgiaService liturgiaService;

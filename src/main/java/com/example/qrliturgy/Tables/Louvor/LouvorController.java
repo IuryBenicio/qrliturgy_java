@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("louvor")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LouvorController {
 
     private final LouvorService louvorService;
